@@ -1,175 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Welcome to Car Rental System</title>
+<?php include"Include/MetaLink.php";?>
+<?php include"Style.php";?>
+<?php include"Include/CustomerHeader.php";?>
+<?php include('config.php');
+session_start();
+$AdminIDurl = $_SESSION['CustomerID'];
+$query="SELECT * FROM carbooking JOIN customer ON customer.CustomerID=carbooking.CustomerID JOIN user ON user.UserID=customer.UserID  WHERE Car_status = 'BOOKED'";
+$result=mysqli_query($link,$query);
+
+?>
+<head>
+	<link rel="stylesheet" href="backgroundcss.css">
+</head>
 <style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+
+.button{
+  background-color: #F08080;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+table,th,td {
+border: 1px solid black;
+border-collapse: collapse;
+}
+th,td{
+padding: 5px;
+text-align: left;  
+}
+
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
 }
 
-/* Style the header */
-header {
-    background-color: #ccc;
-    padding: 10px;
-    text-align: center;
-    font-size: 35px;
-    color: #8E44AD;
-    font-family: 'Fjalla One', sans-serif;
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
 }
 
-/* Create two columns/boxes that floats next to each other */
-nav {
-    float: left;
-    width: 70%;
-    height: 450px; /* only for demonstration, should be removed */
-    background: #ccc;
-    padding: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px; 
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
 }
 
-/* Style the list inside the menu */
-nav ul {
-    list-style-type: none;
-    padding: 0;
+#myTable tr {
+  border-bottom: 1px solid #ddd;
 }
 
-article {
-    float: right;
-    padding: 40px;
-    width: 20%;
-    background-color: #2980B9  ;
-    height: 440px; /* only for demonstration, should be removed */
-    margin-top: 10px;
-    margin-bottom: 10px;
-    text-align: center;
-    padding-top: 10px;
-    
+#myTable tr.header, #myTable tr{
+  background-color: white;
 }
-
-/* Clear floats after the columns */
-section:after {
-
-    content: "";
-    display: table;
-    clear: both;
-    width: 70%;
-    
-}
-
-/* Style the footer */
-footer {
-    background-color: #777;
-    padding: 10px;
-    text-align: center;
-    color: white;
-}
-
-/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
-@media (max-width: 600px) {
-    nav, article {
-        width: 100%;
-        height: auto;
-    }
-}
-
-.navbar {
-    overflow: hidden;
-    background-color: #566573;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.navbar a {
-    float: left;
-    font-size: 16px;
-    color: white;
-    text-align: center;
-    padding: 14px 135px;
-    text-decoration: none;
-}
-
-.dropdown {
-    float: left;
-    overflow: hidden;
-}
-
-.dropdown .dropbtn {
-    font-size: 16px;    
-    border: none;
-    outline: none;
-    color: white;
-    padding: 14px 135px;
-    background-color: inherit;
-    font-family: inherit;
-    margin: 0;
-}
-
-.navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: #2980B9;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #8E44AD;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    float: none;
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
-
-.dropdown-content a:hover {
-    background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-
-
-.toplist {
-    background-color: #2980B9;
-}
-
-.button {
-    background-color: #F39C12  ;
-    border: none;
-    color: black;
-    padding: 10px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    position:relative; 
-    left: 780px; 
-    top: 340px;
-
-}
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td, th {
-    border: 0px;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #ccc;
-}
-
 </style>
+<body id="dullbackground">
+
+
+<!-- Button -->
+  <div class="w3-content">
+	<div class="w3-twothird">
+	  <a href="RentAndReturnPageC.php" class="button w3-button">BOOKED</a>
+	  <a href="AwaitingListPage.php" class="button w3-button">AWAIT</a>
+	</div>
+  </div>
+
+<div class="w3-row-padding w3-padding-64 w3-container">
+<div class="w3-content">
+<body>
+  <input type="text" id="myInput" onkeyup="search()" placeholder="Search for Booking ID" title="Type in a name">
+
+<table id="myTable">
+  <tr class="header">
+    <th>Booking ID</th>
+    <th>Name</th>
+    <th>Car</th>
+    <th>Car Plate</th>
+    <th colspan="2">Rent</th>
+    <th colspan="2">Return</th>
+	<th>Rent Out</th>
+  </tr>
+	<?php
+	while($rows=mysqli_fetch_array($result))
+	{
+		?>
+		<tr>		
+		<td><?php echo $rows['BookingID'];?></td>
+		<td><?php echo $rows['Full_Name'];?></td>
+		<td><?php echo $rows['CarName'];?></td>
+		<td><?php echo $rows['CarPlate'];?></td>
+		<td><?php echo $rows['PickUpDate'];?></td>
+		<td><?php echo $rows['PickUpTime'];?></td>
+		<td><?php echo $rows['ReturnDate'];?></td>
+		<td><?php echo $rows['ReturnTime'];?></td>
+		<td><?php echo "<a href='updaterent.php?id=".$rows['BookingID']."' onclick=\"return confirm('Are you sure to rent out this booking?')\">Rent</a>";?></td>
+		
+		</tr>
+		<?php
+	}
+	?>
+</table>
+
+
+</div>
+</div>
+</body>
+
+<?php include"Include/MainPageFooter.php";?>
+
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+function search() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+function confirmation(){
+	alert("Rent Successfully!")
+}
+
+</script>
+</body>
+</html>
